@@ -1,0 +1,21 @@
+{
+  "name": "bloom-hr-solutions",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -k \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm --workspace @bloom/api run dev",
+    "dev:web": "npm --workspace @bloom/web run dev",
+    "build": "npm --workspaces run build",
+    "start": "npm --workspace @bloom/api run start",
+    "lint": "npm --workspaces run lint",
+    "seed": "tsx scripts/seed.ts"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
+

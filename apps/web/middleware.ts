@@ -1,0 +1,20 @@
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+
+// Lightweight protection: backend enforces auth, this just avoids showing the admin UI.
+export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
+  if (!pathname.startsWith("/admin")) return NextResponse.next();
+  if (pathname === "/admin/login") return NextResponse.next();
+
+  const token = req.cookies.get("admin_token")?.value;
+  if (!token) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/admin/login";
+    return NextResponse.redirect(url);
+  }
+
+  return NextResponse.next();
+}
+
