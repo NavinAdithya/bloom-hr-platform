@@ -59,7 +59,7 @@ export default function AdminLeadsPage() {
     () => apiFetch<{ items: Lead[]; total: number; page: number; limit: number }>(swrKey),
   );
 
-  const [notification, setNotification] = useState<string | null>(null);
+  const [notification, setNotification] = useState<{ msg: string; type: "ok" | "err" } | null>(null);
   const leads = useMemo(() => data?.items ?? [], [data]);
   const total = data?.total ?? 0;
   const pages = Math.max(1, Math.ceil(total / limit));
@@ -72,8 +72,12 @@ export default function AdminLeadsPage() {
       </div>
 
       {notification ? (
-        <div className="rounded-xl border border-[#22c55e]/20 bg-[#22c55e]/10 px-4 py-3 text-[13px] font-medium text-[#22c55e]">
-          {notification}
+        <div className={`rounded-xl border px-4 py-3 text-[13px] font-medium ${
+          notification.type === "ok"
+            ? "border-[#22c55e]/20 bg-[#22c55e]/10 text-[#22c55e]"
+            : "border-red-500/20 bg-red-500/10 text-red-400"
+        }`}>
+          {notification.msg}
         </div>
       ) : null}
 
@@ -100,9 +104,9 @@ export default function AdminLeadsPage() {
             setNotification(null);
             try {
               await exportLeads(status === "all" ? undefined : status);
-              setNotification("Export started.");
+              setNotification({ msg: "Export started.", type: "ok" });
             } catch (e: any) {
-              setNotification(e?.message ?? "Export failed.");
+              setNotification({ msg: e?.message ?? "Export failed.", type: "err" });
             }
           }}
           className="rounded-xl bg-gradient-to-r from-[#22c55e] to-emerald-400 px-4 py-2 text-sm font-semibold text-white dark:text-[#020617] shadow-sm transition-all hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(34,197,94,0.2)]"
@@ -145,10 +149,10 @@ export default function AdminLeadsPage() {
                         if (!confirm(`Delete lead from "${l.name}"?`)) return;
                         try {
                           await adminDelete(`/api/admin/leads/${l._id}`);
-                          setNotification("Lead deleted.");
+                          setNotification({ msg: "Lead deleted.", type: "ok" });
                           await globalMutate(swrKey);
                         } catch (e: any) {
-                          setNotification(e?.message ?? "Delete failed.");
+                          setNotification({ msg: e?.message ?? "Delete failed.", type: "err" });
                         }
                       }}
                     >

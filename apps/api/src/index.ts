@@ -1,5 +1,6 @@
 import http from "node:http";
 import express from "express";
+import type { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
@@ -39,6 +40,14 @@ async function main() {
   );
 
   app.use(routes);
+
+  // Global async error handler — catches unhandled promise rejections from all routes
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    console.error("[API Error]", err?.message ?? err);
+    if (res.headersSent) return;
+    res.status(500).json({ error: "Internal server error" });
+  });
 
   const server = http.createServer(app);
   const io = new SocketIOServer(server, {

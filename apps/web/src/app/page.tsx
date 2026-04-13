@@ -45,7 +45,12 @@ async function safeFetchJson<T>(url: string): Promise<T | null> {
 }
 
 export default async function HomePage() {
-  const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000";
+  // API_INTERNAL_URL is used for server-side fetches in production (e.g. Render URL).
+  // NEXT_PUBLIC_API_BASE_URL is the browser-facing URL.
+  const apiBase =
+    process.env.API_INTERNAL_URL ??
+    process.env.NEXT_PUBLIC_API_BASE_URL ??
+    "http://localhost:4000";
   const cmsBlocksKeysParam =
     "about,whyChooseUs,contactHeading,contactSubheading,contactPhone,contactEmail,contactAddress";
 
