@@ -2,6 +2,7 @@ services:
   - type: web
     name: bloom-api
     env: node
+    plan: free
     buildCommand: npm install && npm --workspaces run build
     startCommand: npm --workspace @bloom/api run start
     envVars:
@@ -10,7 +11,7 @@ services:
       - key: MEDIA_STORAGE
         value: local
       - key: LOCAL_MEDIA_DIR
-        value: /var/data/uploads
+        value: /opt/render/project/src/apps/api/uploads
       - key: JWT_ACCESS_SECRET
         generateValue: true
       - key: FRONTEND_URL
@@ -21,7 +22,4 @@ services:
         sync: false
       - key: SEED_ADMIN_PASSWORD
         sync: false
-    disk:
-      name: uploads-disk
-      mountPath: /var/data
-      sizeGB: 1
+
