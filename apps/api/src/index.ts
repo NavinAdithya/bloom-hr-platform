@@ -21,10 +21,19 @@ async function main() {
     app.use("/uploads", express.static(config.localMedia.uploadsDir));
   }
 
+  const allowedOrigins = config.frontendUrl.split(",").map((o) => o.trim());
+
   app.use(helmet());
   app.use(
     cors({
-      origin: config.frontendUrl,
+      origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+        // Allow requests with no origin (like mobile apps, curl, or same-origin)
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
       credentials: true,
     }),
   );
@@ -45,14 +54,16 @@ async function main() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     console.error("[API Error]", err?.message ?? err);
-    if (res.headersSent) return;
+    if (res.headersSent) {
+      return _next(err);
+    }
     res.status(500).json({ error: "Internal server error" });
   });
 
   const server = http.createServer(app);
   const io = new SocketIOServer(server, {
     cors: {
-      origin: config.frontendUrl,
+      origin: allowedOrigins,
       credentials: true,
     },
   });

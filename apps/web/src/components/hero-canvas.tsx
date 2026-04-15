@@ -90,7 +90,7 @@ export function HeroCanvas({ className = "" }: { className?: string }) {
     let t = 0;
 
     function draw() {
-      if (!canvas) return;
+      if (!canvas || !ctx) return;
       t += 0.007;
       const W = canvas.offsetWidth;
       const H = canvas.offsetHeight;
