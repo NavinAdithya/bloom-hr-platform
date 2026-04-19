@@ -9,6 +9,13 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "SK HR Solutions",
   description: "A growing HR & compliance partner trusted by early-stage and established businesses.",
+  icons: {
+    icon: [
+      { url: "/sk-bloom-logo.png", type: "image/png" },
+    ],
+    apple: "/sk-bloom-logo.png",
+    shortcut: "/sk-bloom-logo.png",
+  },
   openGraph: {
     title: "SK HR Solutions",
     description: "A growing HR & compliance partner trusted by early-stage and established businesses.",

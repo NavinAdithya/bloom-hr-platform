@@ -6,16 +6,17 @@ import Image from "next/image";
 import { ThemeToggle } from "./theme-toggle";
 
 const navLinks = [
-  { label: "Services", href: "/#services" },
-  { label: "About", href: "/#about" },
-  { label: "Clients", href: "/#clients" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Services", href: "/#services", section: "services" },
+  { label: "About", href: "/#about", section: "about" },
+  { label: "Clients", href: "/#clients", section: "clients" },
+  { label: "Contact", href: "/#contact", section: "contact" },
 ];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastY, setLastY] = useState(0);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +24,16 @@ export function Navbar() {
       setScrolled(currentY > 20);
       setVisible(currentY < lastY || currentY < 80);
       setLastY(currentY);
+
+      // Active section detection
+      const sections = ["services", "about", "clients", "contact"];
+      for (const id of [...sections].reverse()) {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 120) {
+          setActiveSection(id);
+          break;
+        }
+      }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -70,10 +81,16 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               style={{ animationDelay: `${i * 60}ms` }}
-              className="relative text-[13px] font-medium text-slate-500 dark:text-[#94a3b8] transition-colors duration-200 hover:text-slate-900 dark:hover:text-white group"
+              className={`relative text-[13px] font-medium transition-colors duration-200 group ${
+                activeSection === link.section
+                  ? "text-[#22c55e] font-semibold"
+                  : "text-slate-500 dark:text-[#94a3b8] hover:text-slate-900 dark:hover:text-white"
+              }`}
             >
               {link.label}
-              <span className="absolute -bottom-0.5 left-0 h-[1.5px] w-0 rounded-full bg-[#22c55e] transition-all duration-300 group-hover:w-full" />
+              <span className={`absolute -bottom-0.5 left-0 h-[1.5px] rounded-full bg-[#22c55e] transition-all duration-300 ${
+                activeSection === link.section ? "w-full" : "w-0 group-hover:w-full"
+              }`} />
             </Link>
           ))}
         </nav>
@@ -83,7 +100,7 @@ export function Navbar() {
           <ThemeToggle />
           <Link
             href="/#contact"
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#22c55e] to-emerald-500 px-4 py-1.5 text-[13px] font-semibold text-white shadow-[0_0_14px_rgba(34,197,94,0.2)] transition-all duration-200 hover:shadow-[0_0_22px_rgba(34,197,94,0.4)] hover:scale-[1.03]"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#22c55e] to-emerald-500 px-4 py-1.5 text-[13px] font-semibold text-white shadow-[0_0_14px_rgba(34,197,94,0.2)] transition-all duration-200 hover:shadow-[0_0_22px_rgba(34,197,94,0.4)] hover:scale-[1.03] btn-ripple"
           >
             Get in Touch
           </Link>
