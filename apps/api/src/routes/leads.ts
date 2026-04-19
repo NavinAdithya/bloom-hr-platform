@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 import { Lead } from "../models";
 import { adminOnly } from "../middleware/adminAuth";
+import { emailService } from "../services/email";
 
 const leadCreateSchema = z.object({
   name: z.string().min(1).max(200),
@@ -31,6 +32,14 @@ leadsRoutes.post("/api/leads", async (req, res) => {
     message: parsed.data.message,
     status: "new",
   });
+
+  // Notify owner asynchronously
+  emailService.sendNewLeadEmail({
+    name: created.name,
+    email: created.email,
+    phone: created.phone,
+    message: created.message,
+  }).catch((err) => console.error("Email notification failed:", err));
 
   const io = req.app.get("io") as any | undefined;
   io?.emit("leads.changed", { action: "created", id: created._id.toString() });

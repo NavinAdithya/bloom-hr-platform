@@ -21,13 +21,35 @@ async function main() {
     app.use("/uploads", express.static(config.localMedia.uploadsDir));
   }
 
-  const allowedOrigins = config.frontendUrl.split(",").map((o) => o.trim());
+  // Security middleware
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          connectSrc: ["'self'", "https://bloom-api-l0u1.onrender.com", "https://sk-bloom-hr-solutions.netlify.app"],
+          imgSrc: ["'self'", "data:", "blob:", "https://*"],
+          styleSrc: ["'self'", "'unsafe-inline'"],
+          scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        },
+      },
+      hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
+    })
+  );
 
-  app.use(helmet());
+  // Global rate limiting
+  const globalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 300,
+    message: { error: "Too many requests from this IP, please try again after 15 minutes" },
+  });
+  app.use(globalLimiter);
+
+  // Specific CORS configuration
+  const allowedOrigins = config.frontendUrl.split(",").map((o) => o.trim());
   app.use(
     cors({
       origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-        // Allow requests with no origin (like mobile apps, curl, or same-origin)
         if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
@@ -35,16 +57,14 @@ async function main() {
         }
       },
       credentials: true,
-    }),
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+    })
   );
+
   app.use(cookieParser());
   app.use(express.json({ limit: "2mb" }));
 
-  // Global limiter (tune later if needed)
-  app.use(
-    rateLimit({
-      windowMs: 15 * 60 * 1000,
-      max: 300,
     }),
   );
 

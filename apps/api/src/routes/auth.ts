@@ -12,7 +12,7 @@ import rateLimit from "express-rate-limit";
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, 
   max: 5, 
-  message: { error: "Too many login attempts. Please try again in 15 minutes." },
+  message: { error: "Security alert: Too many login attempts. Access blocked for 15 minutes." },
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -46,7 +46,11 @@ authRoutes.post("/api/auth/login", loginLimiter, async (req, res) => {
   if (!admin) return res.status(401).json({ error: "Invalid credentials" });
 
   const ok = await bcrypt.compare(password, admin.passwordHash);
-  if (!ok) return res.status(401).json({ error: "Invalid credentials" });
+  if (!ok) {
+    // Simulated latency to prevent timing attacks and slow down brute force
+    await new Promise((resolve) => setTimeout(resolve, 1200 + Math.random() * 800));
+    return res.status(401).json({ error: "Invalid credentials" });
+  }
 
   const token = jwt.sign(
     { role: admin.role ?? "admin", email: admin.email },
