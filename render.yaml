@@ -3,7 +3,7 @@ services:
     name: bloom-api
     env: node
     plan: free
-    buildCommand: npm install && npm --workspaces run build
+    buildCommand: npm install && npm --workspace @bloom/api run build
     startCommand: npm --workspace @bloom/api run start
     envVars:
       - key: NODE_ENV
