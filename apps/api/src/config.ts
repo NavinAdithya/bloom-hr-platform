@@ -23,7 +23,7 @@ export const config = {
   jwtAccessSecret: required("JWT_ACCESS_SECRET"),
   jwtAccessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN ?? "7d",
 
-  frontendUrl: process.env.FRONTEND_URL ?? "http://localhost:3000",
+  frontendUrl: process.env.FRONTEND_URL ?? "https://sk-bloom-hr-solutions.netlify.app",
 
   cookieSecure: (process.env.COOKIE_SECURE ?? "false").toLowerCase() === "true",
   cookieSameSite: (process.env.COOKIE_SAME_SITE ?? "lax") as "lax" | "strict" | "none",

@@ -3,11 +3,15 @@ services:
     name: bloom-api
     env: node
     plan: free
-    buildCommand: npm install && npm --workspace @bloom/api run build
+    buildCommand: npm install --include=dev && npm --workspace @bloom/api run build
     startCommand: npm --workspace @bloom/api run start
     envVars:
       - key: NODE_ENV
         value: production
+      - key: COOKIE_SECURE
+        value: true
+      - key: COOKIE_SAME_SITE
+        value: none
       - key: MEDIA_STORAGE
         value: local
       - key: LOCAL_MEDIA_DIR
