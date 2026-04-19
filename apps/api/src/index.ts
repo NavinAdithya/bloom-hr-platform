@@ -65,9 +65,6 @@ async function main() {
   app.use(cookieParser());
   app.use(express.json({ limit: "2mb" }));
 
-    }),
-  );
-
   app.use(routes);
 
   // Global async error handler — catches unhandled promise rejections from all routes

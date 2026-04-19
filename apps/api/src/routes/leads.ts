@@ -36,9 +36,9 @@ leadsRoutes.post("/api/leads", async (req, res) => {
   // Notify owner asynchronously
   emailService.sendNewLeadEmail({
     name: created.name,
-    email: created.email,
-    phone: created.phone,
-    message: created.message,
+    email: created.email ?? undefined,
+    phone: created.phone ?? undefined,
+    message: created.message ?? "",
   }).catch((err) => console.error("Email notification failed:", err));
 
   const io = req.app.get("io") as any | undefined;
