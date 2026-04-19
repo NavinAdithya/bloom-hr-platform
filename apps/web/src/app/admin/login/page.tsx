@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
           </div>
           <div className="text-[22px] font-bold tracking-tight text-center">Admin Login</div>
           <div className="mt-2 text-[13px] text-slate-500 dark:text-[#94a3b8] text-center">
-            Sign in to the Bloom HR Solutions CMS.
+            Sign in to the SK HR Solutions CMS.
           </div>
 
           <form className="mt-8 flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>

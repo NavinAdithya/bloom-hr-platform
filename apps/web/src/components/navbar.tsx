@@ -1,0 +1,94 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { ThemeToggle } from "./theme-toggle";
+
+const navLinks = [
+  { label: "Services", href: "/#services" },
+  { label: "About", href: "/#about" },
+  { label: "Clients", href: "/#clients" },
+  { label: "Contact", href: "/#contact" },
+];
+
+export function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastY, setLastY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      setScrolled(currentY > 20);
+      setVisible(currentY < lastY || currentY < 80);
+      setLastY(currentY);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastY]);
+
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        visible ? "translate-y-0" : "-translate-y-full"
+      } ${
+        scrolled
+          ? "border-b border-black/8 dark:border-white/8 bg-white/90 dark:bg-[#020617]/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)]"
+          : "bg-transparent border-b border-transparent"
+      }`}
+    >
+      <div className="container-fluid flex h-16 items-center justify-between gap-4">
+        {/* Logo */}
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 group transition-transform duration-300 hover:scale-[1.02]"
+        >
+          <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-[#22c55e]/20 group-hover:ring-[#22c55e]/50 transition-all duration-300 shadow-[0_0_12px_rgba(34,197,94,0.15)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.3)]">
+            <Image
+              src="/sk-bloom-logo.png"
+              alt="SK HR Solutions Logo"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+          <div className="leading-tight">
+            <div className="text-[15px] font-bold tracking-tight text-slate-900 dark:text-white transition-colors group-hover:text-[#22c55e]">
+              SK HR Solutions
+            </div>
+            <div className="text-[9.5px] font-semibold tracking-[0.12em] text-slate-500 dark:text-[#94a3b8] uppercase">
+              Corporate Solutions
+            </div>
+          </div>
+        </Link>
+
+        {/* Nav Links */}
+        <nav className="hidden items-center gap-7 md:flex">
+          {navLinks.map((link, i) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              style={{ animationDelay: `${i * 60}ms` }}
+              className="relative text-[13px] font-medium text-slate-500 dark:text-[#94a3b8] transition-colors duration-200 hover:text-slate-900 dark:hover:text-white group"
+            >
+              {link.label}
+              <span className="absolute -bottom-0.5 left-0 h-[1.5px] w-0 rounded-full bg-[#22c55e] transition-all duration-300 group-hover:w-full" />
+            </Link>
+          ))}
+        </nav>
+
+        {/* Right Actions */}
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <Link
+            href="/#contact"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#22c55e] to-emerald-500 px-4 py-1.5 text-[13px] font-semibold text-white shadow-[0_0_14px_rgba(34,197,94,0.2)] transition-all duration-200 hover:shadow-[0_0_22px_rgba(34,197,94,0.4)] hover:scale-[1.03]"
+          >
+            Get in Touch
+          </Link>
+        </div>
+      </div>
+    </header>
+  );
+}
