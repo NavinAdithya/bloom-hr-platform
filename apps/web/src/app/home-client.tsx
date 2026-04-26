@@ -658,7 +658,7 @@ export default function HomeClient({ initialData }: { initialData: { services: S
                 { icon: Eye, label: "Data-Driven Execution", desc: "Measurable frameworks implemented flawlessly into your workflow." },
               ].map((item) => (
                 <motion.div key={item.label} variants={fadeUp} className="group flex items-center gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-slate-100 bg-[#22c55e]/10 text-[#22c55e] transition-all duration-300 group-hover:bg-[#22c55e] group-hover:text-white group-hover:shadow-[0_0_20px_rgba(34,197,94,0.3)] dark:border-[#22c55e]/18 text-lg">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#22c55e]/15 to-transparent text-[#22c55e] ring-1 ring-[#22c55e]/30 shadow-[0_0_15px_rgba(34,197,94,0.15)] transition-all duration-300 group-hover:from-[#22c55e] group-hover:to-[#22c55e] group-hover:text-white group-hover:shadow-[0_0_25px_rgba(34,197,94,0.4)] group-hover:ring-[#22c55e]/60 text-lg">
                     <item.icon size={20} />
                   </div>
                   <div>
