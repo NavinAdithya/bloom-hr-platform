@@ -58,15 +58,16 @@ export function Navbar() {
           <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-[#22c55e]/20 group-hover:ring-[#22c55e]/50 transition-all duration-300 shadow-[0_0_12px_rgba(34,197,94,0.15)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.3)]">
             <Image
               src="/sk-bloom-logo.png"
-              alt="SK HR Solutions Logo"
+              alt="SK Bloom HR Solutions Logo"
               fill
+              sizes="40px"
               className="object-cover"
               priority
             />
           </div>
           <div className="leading-tight">
             <div className="text-[15px] font-bold tracking-tight text-slate-900 dark:text-white transition-colors group-hover:text-[#22c55e]">
-              SK HR Solutions
+              SK Bloom HR Solutions
             </div>
             <div className="text-[9.5px] font-semibold tracking-[0.12em] text-slate-500 dark:text-[#94a3b8] uppercase">
               Corporate Solutions

@@ -43,7 +43,7 @@ async function adminJson(path: string, init: RequestInit) {
 
 export default function AdminTestimonialsPage() {
   const swrKey = "/api/admin/testimonials?includeInactive=true";
-  const { data, error } = useSWR<{ items: Testimonial[] }>(swrKey, () => apiFetch<{ items: Testimonial[] }>(swrKey));
+  const { data, error, isLoading } = useSWR<{ items: Testimonial[] }>(swrKey, () => apiFetch<{ items: Testimonial[] }>(swrKey));
   const testimonials = useMemo(() => data?.items ?? [], [data]);
 
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -127,7 +127,12 @@ export default function AdminTestimonialsPage() {
         </div>
       ) : null}
 
-      {error ? <div className="text-sm text-red-500">Failed to load testimonials.</div> : null}
+      {error ? (
+        <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-[13px] font-medium text-red-400">
+          <div className="font-bold">Failed to load testimonials</div>
+          <div className="mt-1 text-[12px] opacity-80">{error?.message ?? "Unknown error — check your session or API connection."}</div>
+        </div>
+      ) : null}
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 lg:grid-cols-2">
         <div className="flex flex-col gap-3">
@@ -222,7 +227,17 @@ export default function AdminTestimonialsPage() {
             </tr>
           </thead>
           <tbody>
-            {testimonials.map((t) => (
+            {isLoading ? (
+              <tr>
+                <td colSpan={4} className="px-4 py-6">
+                  <div className="flex flex-col gap-2">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="skeleton h-8 w-full rounded-xl" />
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            ) : testimonials.map((t) => (
               <tr key={t._id} className="border-b border-black/5 dark:border-white/5">
                 <td className="px-4 py-3 font-semibold">{t.name}</td>
                 <td className="px-4 py-3">{t.rating}</td>

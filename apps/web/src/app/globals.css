@@ -240,36 +240,6 @@ body { @apply antialiased; }
 }
 
 /* ═══════════════════════════════════════
-   SCROLL PROGRESS BAR
-   ═══════════════════════════════════════ */
-.scroll-progress {
-  position: fixed;
-  top: 0; left: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #22c55e, #4ade80);
-  transform-origin: left;
-  z-index: 100;
-}
-
-/* ═══════════════════════════════════════
-   BUTTON GLOW PULSE
-   ═══════════════════════════════════════ */
-@keyframes btnGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
-  50%       { box-shadow: 0 0 24px 4px rgba(34,197,94,0.25); }
-}
-.btn-glow { animation: btnGlow 3s ease-in-out infinite; }
-
-/* ═══════════════════════════════════════
-   QUOTE MARK
-   ═══════════════════════════════════════ */
-.quote-icon {
-  position: absolute;
-  top: 1.25rem; right: 1.25rem;
-  color: rgba(34, 197, 94, 0.18);
-}
-
-/* ═══════════════════════════════════════
    SCROLL PROGRESS BAR (above fixed navbar)
    ═══════════════════════════════════════ */
 .scroll-progress {
@@ -282,6 +252,180 @@ body { @apply antialiased; }
   transform-origin: left;
   z-index: 9999;
 }
+
+/* ═══════════════════════════════════════
+   BUTTON GLOW PULSE
+   ═══════════════════════════════════════ */
+@keyframes btnGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  50%       { box-shadow: 0 0 24px 4px rgba(34,197,94,0.25); }
+}
+.btn-glow { animation: btnGlow 3s ease-in-out infinite; }
+
+/* ═══════════════════════════════════════
+   PRIMARY BUTTON HOVER GLOW (accessible)
+   ═══════════════════════════════════════ */
+.btn-primary-glow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.btn-primary-glow:hover,
+.btn-primary-glow:focus-visible {
+  box-shadow: 0 0 18px rgba(34,197,94,0.55);
+  outline: none;
+}
+
+/* ═══════════════════════════════════════
+   QUOTE MARK
+   ═══════════════════════════════════════ */
+.quote-icon {
+  position: absolute;
+  top: 1.25rem; right: 1.25rem;
+  color: rgba(34, 197, 94, 0.18);
+}
+
+/* ═══════════════════════════════════════
+   FLUID WATER WAVE DIVIDER
+   ═══════════════════════════════════════ */
+@keyframes waveFlow {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.wave-divider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  height: 48px;
+  pointer-events: none;
+}
+.wave-divider svg {
+  display: block;
+  width: 200%;
+  height: 100%;
+  will-change: transform;
+  animation: waveFlow 14s linear infinite;
+}
+.dark .wave-divider-path { fill: rgba(34,197,94,0.06); }
+.wave-divider-path { fill: rgba(34,197,94,0.07); }
+
+/* ═══════════════════════════════════════
+   RIPPLE CLICK EFFECT
+   ═══════════════════════════════════════ */
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+.btn-ripple { position: relative; overflow: hidden; }
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  width: 100%; height: 100%;
+  background: rgba(255,255,255,0.25);
+  transform: scale(0);
+  opacity: 1;
+  transition: none;
+}
+.btn-ripple:active::after {
+  animation: ripple 0.45s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════
+   INPUT FOCUS GLOW
+   ═══════════════════════════════════════ */
+.input-glow {
+  transition: box-shadow 0.25s cubic-bezier(0.25,0.1,0.25,1), border-color 0.25s ease;
+}
+.input-glow:focus {
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.15), 0 1px 3px rgba(0,0,0,0.1);
+  outline: none;
+}
+
+/* ═══════════════════════════════════════
+   SKELETON SHIMMER LOADER
+   ═══════════════════════════════════════ */
+@keyframes skeletonPulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+.skeleton {
+  background: linear-gradient(90deg, rgba(148,163,184,0.12) 25%, rgba(148,163,184,0.22) 50%, rgba(148,163,184,0.12) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 8px;
+}
+.dark .skeleton {
+  background: linear-gradient(90deg, rgba(30,41,59,0.8) 25%, rgba(51,65,85,0.9) 50%, rgba(30,41,59,0.8) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════
+   PAGE ENTRANCE ANIMATION
+   ═══════════════════════════════════════ */
+@keyframes pageEntrance {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: pageEntrance 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+/* ═══════════════════════════════════════
+   HOVER LIFT — cards without Framer Motion
+   ═══════════════════════════════════════ */
+.hover-lift {
+  transition: transform 0.22s cubic-bezier(0.25,0.1,0.25,1),
+              box-shadow 0.22s cubic-bezier(0.25,0.1,0.25,1);
+}
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
+}
+.dark .hover-lift:hover {
+  box-shadow: 0 14px 40px rgba(0,0,0,0.45), 0 2px 8px rgba(34,197,94,0.08);
+}
+
+/* ═══════════════════════════════════════
+   NAVBAR SCROLL ACTIVE INDICATOR
+   ═══════════════════════════════════════ */
+.nav-link-active {
+  color: #22c55e !important;
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════
+   STAGGER ENTER UTILITY (CSS-only fallback)
+   ═══════════════════════════════════════ */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-slide-up {
+  animation: fadeSlideUp 0.55s cubic-bezier(0.16,1,0.3,1) both;
+}
+.fade-slide-up:nth-child(1) { animation-delay: 0ms; }
+.fade-slide-up:nth-child(2) { animation-delay: 80ms; }
+.fade-slide-up:nth-child(3) { animation-delay: 160ms; }
+.fade-slide-up:nth-child(4) { animation-delay: 240ms; }
+.fade-slide-up:nth-child(5) { animation-delay: 320ms; }
+.fade-slide-up:nth-child(6) { animation-delay: 400ms; }
+
+/* ═══════════════════════════════════════
+   ACCESSIBILITY — REDUCED MOTION
+   Disables all animations for users who
+   have prefers-reduced-motion enabled.
+   ═══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 
 /* ═══════════════════════════════════════
    RIPPLE CLICK EFFECT

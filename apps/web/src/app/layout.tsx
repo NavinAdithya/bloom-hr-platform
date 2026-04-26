@@ -7,7 +7,7 @@ import { Navbar } from "../components/navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SK HR Solutions",
+  title: "SK Bloom HR Solutions",
   description: "A growing HR & compliance partner trusted by early-stage and established businesses.",
   icons: {
     icon: [
@@ -17,13 +17,13 @@ export const metadata: Metadata = {
     shortcut: "/sk-bloom-logo.png",
   },
   openGraph: {
-    title: "SK HR Solutions",
+    title: "SK Bloom HR Solutions",
     description: "A growing HR & compliance partner trusted by early-stage and established businesses.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SK HR Solutions",
+    title: "SK Bloom HR Solutions",
     description: "A growing HR & compliance partner trusted by early-stage and established businesses.",
   },
 };
@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <footer className="border-t border-black/5 dark:border-white/5 mt-20">
               <div className="container-fluid py-10 text-[13px] text-slate-500 dark:text-[#94a3b8]">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div>&copy; {new Date().getFullYear()} SK HR Solutions. All rights reserved.</div>
+                  <div>&copy; {new Date().getFullYear()} SK Bloom HR Solutions. All rights reserved.</div>
                   <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-white/20">Trusted. Compliant. Growing.</div>
                 </div>
               </div>

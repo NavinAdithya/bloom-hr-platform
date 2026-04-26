@@ -27,7 +27,7 @@ function toSortedActive<T extends { sortOrder?: number; isActive?: boolean }>(it
     .slice()
     .sort((a, b) => (a.sortOrder ?? 999) - (b.sortOrder ?? 999));
 }
-const CMS_KEYS = "contactHeading,contactSubheading,contactPhone,contactEmail,contactAddress";
+const CMS_KEYS = "contactHeading,contactSubheading,contactPhone,contactEmail,contactAddress,sectionVisible_services,sectionVisible_process,sectionVisible_about,sectionVisible_clients,sectionVisible_testimonials,sectionVisible_contact";
 const EASE_OUT   = [0.25, 0.1, 0.25, 1]  as const;
 const EASE_EXPO  = [0.16, 1,   0.3,  1]  as const;
 
@@ -101,6 +101,27 @@ function MaskReveal({ children, delay = 0 }: { children: React.ReactNode; delay?
         {children}
       </motion.span>
     </span>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   Water Wave Divider
+───────────────────────────────────────────── */
+function WaterWaveDivider() {
+  return (
+    <div className="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path
+          className="wave-divider-path"
+          d="M0,24 C120,48 240,0 360,24 C480,48 600,0 720,24 C840,48 960,0 1080,24 C1200,48 1320,0 1440,24 L1440,48 L0,48 Z"
+        />
+        <path
+          className="wave-divider-path"
+          d="M0,32 C120,8 240,48 360,32 C480,8 600,48 720,32 C840,8 960,48 1080,32 C1200,8 1320,48 1440,32 L1440,48 L0,48 Z"
+          opacity="0.5"
+        />
+      </svg>
+    </div>
   );
 }
 
@@ -548,6 +569,13 @@ export default function HomeClient({ initialData }: { initialData: { services: S
   const blocks       = useMemo(() => cmsData?.blocks ?? [], [cmsData]);
 
   const getBlock       = (key: string) => blocks.find((b) => b.key === key)?.contentHtml ?? "";
+  // sectionVisible_* — if the CMS block is missing entirely, default to true (visible).
+  // Only hidden when block explicitly contains the string "false".
+  const isSectionVisible = (key: string) => {
+    const block = blocks.find((b) => b.key === `sectionVisible_${key}`);
+    if (!block) return true; // key missing → default visible
+    return block.contentHtml?.trim() !== "false";
+  };
   const contactPhone   = getBlock("contactPhone")   || "+91 8903476936";
   const contactEmail   = getBlock("contactEmail")   || "bloomskhrsolutions@gmail.com";
   const contactAddress = getBlock("contactAddress") || "Chennai, India";
@@ -564,7 +592,7 @@ export default function HomeClient({ initialData }: { initialData: { services: S
       <ScrollProgressBar />
       <div className="relative overflow-hidden">
         <section ref={heroRef} className="relative flex min-h-[88vh] items-center overflow-hidden pb-20 pt-16 sm:pb-28 sm:pt-20">
-          <motion.div style={{ y: bgShift }} className="hero-grid pointer-events-none absolute inset-0 -z-10" />
+          <motion.div style={{ y: bgShift }} className="hero-grid pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
           <motion.div style={{ y: heroY, opacity: heroOpacity }} className="container-fluid w-full">
             <div className="grid items-center gap-12 lg:grid-cols-2">
               <div>
@@ -664,11 +692,12 @@ export default function HomeClient({ initialData }: { initialData: { services: S
         </section>
 
         <ServicesSection services={services} />
-        <ProcessSection />
-        <WhyUsSection />
-        <ClientsSection clients={clients} />
-        <TestimonialsSection testimonials={testimonials} />
-        <ContactSection contactPhone={contactPhone} contactEmail={contactEmail} contactAddress={contactAddress} />
+        <WaterWaveDivider />
+        {isSectionVisible("process") && <ProcessSection />}
+        {isSectionVisible("about") && <WhyUsSection />}
+        {isSectionVisible("clients") && <ClientsSection clients={clients} />}
+        {isSectionVisible("testimonials") && <TestimonialsSection testimonials={testimonials} />}
+        {isSectionVisible("contact") && <ContactSection contactPhone={contactPhone} contactEmail={contactEmail} contactAddress={contactAddress} />}
       </div>
     </>
   );
