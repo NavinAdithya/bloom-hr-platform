@@ -45,7 +45,7 @@ export function Navbar() {
         visible ? "translate-y-0" : "-translate-y-full"
       } ${
         scrolled
-          ? "border-b border-black/8 dark:border-white/8 bg-white/90 dark:bg-[#020617]/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)]"
+          ? "border-b border-[#22c55e]/20 bg-white/90 dark:border-[#22c55e]/20 dark:bg-[#020617]/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(34,197,94,0.1)] dark:shadow-[0_4px_30px_rgba(34,197,94,0.15)]"
           : "bg-transparent border-b border-transparent"
       }`}
     >

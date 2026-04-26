@@ -647,7 +647,9 @@ export default function HomeClient({ initialData }: { initialData: { services: S
         </section>
 
         {/* ═══════ TRUST PILLARS ═══════ */}
-        <section className="border-y border-slate-200 bg-white/60 backdrop-blur-md dark:border-white/5 dark:bg-[#0f172a]/50">
+        <section className="relative border-y border-[#22c55e]/20 bg-white/60 backdrop-blur-md dark:border-[#22c55e]/20 dark:bg-[#0f172a]/50 shadow-[0_0_30px_rgba(34,197,94,0.05)]">
+          <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#22c55e] to-transparent opacity-70" />
+          <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-[#22c55e] to-transparent opacity-70" />
           <div className="container-fluid py-10">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-40px" }} variants={stagger} className="grid grid-cols-1 gap-6 sm:grid-cols-3">
               {[
