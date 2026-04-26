@@ -55,13 +55,13 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-2.5 group transition-transform duration-300 hover:scale-[1.02]"
         >
-          <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white p-0.5 ring-1 ring-white/10 transition-all duration-300 group-hover:ring-[#22c55e]/50 shadow-[0_0_12px_rgba(34,197,94,0.1)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.25)]">
+          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white ring-1 ring-white/10 transition-all duration-300 group-hover:ring-[#22c55e]/50 shadow-[0_0_12px_rgba(34,197,94,0.1)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.25)]">
             <Image
               src="/sk-bloom-logo.png"
               alt="SK Bloom HR Solutions Logo"
               fill
               sizes="40px"
-              className="object-contain"
+              className="object-contain scale-[1.7] origin-center"
               priority
             />
           </div>
