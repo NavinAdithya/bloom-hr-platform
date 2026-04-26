@@ -23,7 +23,7 @@ export const config = {
   jwtAccessSecret: required("JWT_ACCESS_SECRET"),
   jwtAccessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN ?? "7d",
 
-  frontendUrl: process.env.FRONTEND_URL ?? "https://sk-bloom-hr-solutions.netlify.app",
+  frontendUrl: process.env.FRONTEND_URL ?? "https://sk-bloom-hr-solutions.netlify.app,http://localhost:3000",
 
   // In production (cross-origin Netlify → Render), cookies MUST be SameSite=none + Secure=true.
   // Lax/Strict blocks all cross-origin credentialed requests — the admin panel becomes unusable.
