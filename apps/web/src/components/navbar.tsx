@@ -61,7 +61,7 @@ export function Navbar() {
               alt="SK Bloom HR Solutions Logo"
               fill
               sizes="40px"
-              className="object-cover"
+              className="object-contain p-0.5 bg-white"
               priority
             />
           </div>
@@ -101,7 +101,7 @@ export function Navbar() {
           <ThemeToggle />
           <Link
             href="/#contact"
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#22c55e] to-emerald-500 px-4 py-1.5 text-[13px] font-semibold text-white shadow-[0_0_14px_rgba(34,197,94,0.2)] transition-all duration-200 hover:shadow-[0_0_22px_rgba(34,197,94,0.4)] hover:scale-[1.03] btn-ripple"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#22c55e] to-emerald-500 px-4 py-1.5 text-[13px] font-semibold text-white btn-neon btn-ripple"
           >
             Get in Touch
           </Link>

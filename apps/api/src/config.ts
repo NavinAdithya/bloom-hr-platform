@@ -25,8 +25,14 @@ export const config = {
 
   frontendUrl: process.env.FRONTEND_URL ?? "https://sk-bloom-hr-solutions.netlify.app",
 
-  cookieSecure: (process.env.COOKIE_SECURE ?? "false").toLowerCase() === "true",
-  cookieSameSite: (process.env.COOKIE_SAME_SITE ?? "lax") as "lax" | "strict" | "none",
+  // In production (cross-origin Netlify → Render), cookies MUST be SameSite=none + Secure=true.
+  // Lax/Strict blocks all cross-origin credentialed requests — the admin panel becomes unusable.
+  cookieSecure: process.env.COOKIE_SECURE
+    ? process.env.COOKIE_SECURE.toLowerCase() === "true"
+    : process.env.NODE_ENV === "production",
+  cookieSameSite: (process.env.COOKIE_SAME_SITE
+    ? process.env.COOKIE_SAME_SITE
+    : process.env.NODE_ENV === "production" ? "none" : "lax") as "lax" | "strict" | "none",
   adminTokenCookieName: process.env.ADMIN_TOKEN_COOKIE_NAME ?? "admin_token",
 
   mediaStorage: (process.env.MEDIA_STORAGE ?? "").toLowerCase() || (process.env.S3_BUCKET ? "s3" : "local"),

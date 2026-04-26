@@ -221,6 +221,7 @@ export default function AdminTestimonialsPage() {
           <thead className="border-b border-black/5 dark:border-white/5 bg-slate-50 dark:bg-[#0f172a]/50">
             <tr>
               <th className="px-4 py-3 font-semibold">Name</th>
+              <th className="px-4 py-3 font-semibold">Feedback</th>
               <th className="px-4 py-3 font-semibold">Rating</th>
               <th className="px-4 py-3 font-semibold">Active</th>
               <th className="px-4 py-3 font-semibold">Actions</th>
@@ -229,7 +230,7 @@ export default function AdminTestimonialsPage() {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={4} className="px-4 py-6">
+                <td colSpan={5} className="px-4 py-6">
                   <div className="flex flex-col gap-2">
                     {[1, 2, 3].map((i) => (
                       <div key={i} className="skeleton h-8 w-full rounded-xl" />
@@ -238,8 +239,11 @@ export default function AdminTestimonialsPage() {
                 </td>
               </tr>
             ) : testimonials.map((t) => (
-              <tr key={t._id} className="border-b border-black/5 dark:border-white/5">
+              <tr key={t._id} className="border-b border-black/5 dark:border-white/5 hover:bg-slate-50/50 dark:hover:bg-[#0f172a]/80 transition-colors">
                 <td className="px-4 py-3 font-semibold">{t.name}</td>
+                <td className="px-4 py-3 text-slate-500 dark:text-[#94a3b8] max-w-xs truncate">
+                  {t.feedback}
+                </td>
                 <td className="px-4 py-3">{t.rating}</td>
                 <td className="px-4 py-3">{t.isActive ? "Yes" : "No"}</td>
                 <td className="px-4 py-3">
@@ -292,7 +296,7 @@ export default function AdminTestimonialsPage() {
             ))}
             {testimonials.length === 0 ? (
               <tr>
-                <td colSpan={4} className="px-4 py-6 text-sm text-[#94a3b8]">
+                <td colSpan={5} className="px-4 py-6 text-sm text-[#94a3b8]">
                   No testimonials found.
                 </td>
               </tr>

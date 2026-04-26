@@ -105,27 +105,6 @@ function MaskReveal({ children, delay = 0 }: { children: React.ReactNode; delay?
 }
 
 /* ─────────────────────────────────────────────
-   Water Wave Divider
-───────────────────────────────────────────── */
-function WaterWaveDivider() {
-  return (
-    <div className="wave-divider" aria-hidden="true">
-      <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-        <path
-          className="wave-divider-path"
-          d="M0,24 C120,48 240,0 360,24 C480,48 600,0 720,24 C840,48 960,0 1080,24 C1200,48 1320,0 1440,24 L1440,48 L0,48 Z"
-        />
-        <path
-          className="wave-divider-path"
-          d="M0,32 C120,8 240,48 360,32 C480,8 600,48 720,32 C840,8 960,48 1080,32 C1200,8 1320,48 1440,32 L1440,48 L0,48 Z"
-          opacity="0.5"
-        />
-      </svg>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────
    Global gradient mesh background (Light + Dark aware)
 ───────────────────────────────────────────── */
 function GradientMesh() {
@@ -628,7 +607,7 @@ export default function HomeClient({ initialData }: { initialData: { services: S
                 >
                   <MagneticButton
                     href="/#contact"
-                    className="btn-glow group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#22c55e] to-emerald-400 px-8 py-4 text-[15px] font-extrabold text-white shadow-xl shadow-[#22c55e]/20 transition-all duration-300 hover:shadow-2xl hover:shadow-[#22c55e]/40 dark:text-[#020617]"
+                    className="btn-neon btn-ripple group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#22c55e] to-emerald-400 px-8 py-4 text-[15px] font-extrabold text-white shadow-xl shadow-[#22c55e]/20 transition-all duration-300 dark:text-[#020617]"
                   >
                     <span className="absolute inset-0 origin-left scale-x-0 bg-white/20 transition-transform duration-500 ease-out group-hover:scale-x-100 dark:bg-white/15" />
                     <span className="relative">Claim Compliance Audit</span>
@@ -636,7 +615,7 @@ export default function HomeClient({ initialData }: { initialData: { services: S
                   </MagneticButton>
                   <MagneticButton
                     href="/#services"
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-8 py-4 text-[15px] font-bold text-slate-700 shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 dark:border-white/10 dark:bg-transparent dark:text-white dark:hover:border-white/20 dark:hover:bg-white/5 dark:shadow-none"
+                    className="btn-neon inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-8 py-4 text-[15px] font-bold text-slate-700 shadow-sm transition-all hover:border-[#22c55e]/40 hover:bg-slate-50 dark:border-white/10 dark:bg-transparent dark:text-white dark:hover:border-[#22c55e]/40 dark:hover:bg-white/5 dark:shadow-none"
                   >
                     View Frameworks
                   </MagneticButton>
@@ -692,7 +671,6 @@ export default function HomeClient({ initialData }: { initialData: { services: S
         </section>
 
         <ServicesSection services={services} />
-        <WaterWaveDivider />
         {isSectionVisible("process") && <ProcessSection />}
         {isSectionVisible("about") && <WhyUsSection />}
         {isSectionVisible("clients") && <ClientsSection clients={clients} />}
