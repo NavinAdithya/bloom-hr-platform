@@ -609,7 +609,6 @@ export default function HomeClient({ initialData }: { initialData: { services: S
                     href="/#contact"
                     className="btn-neon btn-ripple group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#22c55e] to-emerald-400 px-8 py-4 text-[15px] font-extrabold text-white shadow-xl shadow-[#22c55e]/20 transition-all duration-300 dark:text-[#020617]"
                   >
-                    <span className="absolute inset-0 origin-left scale-x-0 bg-white/20 transition-transform duration-500 ease-out group-hover:scale-x-100 dark:bg-white/15" />
                     <span className="relative">Claim Compliance Audit</span>
                     <ChevronRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </MagneticButton>
@@ -674,6 +673,7 @@ export default function HomeClient({ initialData }: { initialData: { services: S
         {isSectionVisible("process") && <ProcessSection />}
         {isSectionVisible("about") && <WhyUsSection />}
         {isSectionVisible("clients") && <ClientsSection clients={clients} />}
+        {isSectionVisible("testimonials") && testimonials.length > 0 && <TestimonialsSection testimonials={testimonials} />}
         {isSectionVisible("contact") && <ContactSection contactPhone={contactPhone} contactEmail={contactEmail} contactAddress={contactAddress} />}
       </div>
     </>
