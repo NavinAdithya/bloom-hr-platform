@@ -674,7 +674,6 @@ export default function HomeClient({ initialData }: { initialData: { services: S
         {isSectionVisible("process") && <ProcessSection />}
         {isSectionVisible("about") && <WhyUsSection />}
         {isSectionVisible("clients") && <ClientsSection clients={clients} />}
-        {isSectionVisible("testimonials") && <TestimonialsSection testimonials={testimonials} />}
         {isSectionVisible("contact") && <ContactSection contactPhone={contactPhone} contactEmail={contactEmail} contactAddress={contactAddress} />}
       </div>
     </>
