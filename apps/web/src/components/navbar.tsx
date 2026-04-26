@@ -61,7 +61,7 @@ export function Navbar() {
               alt="SK Bloom HR Solutions Logo"
               fill
               sizes="40px"
-              className="object-contain scale-[1.7] origin-center"
+              className="object-contain scale-[1.8] translate-x-[10%] translate-y-[10%] origin-center"
               priority
             />
           </div>
