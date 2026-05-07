@@ -16,6 +16,7 @@ import {
 import { getSocket }   from "./../lib/socket";
 import { API_BASE_URL, apiFetch } from "./../lib/api";
 import { LeadForm }    from "../components/lead-form";
+import { MouseFluidBackground } from "../components/mouse-fluid-background";
 import type { Client, ContentBlock, Service, Testimonial } from "./page";
 
 /* ─────────────────────────────────────────────
@@ -107,15 +108,7 @@ function MaskReveal({ children, delay = 0 }: { children: React.ReactNode; delay?
 /* ─────────────────────────────────────────────
    Global gradient mesh background (Light + Dark aware)
 ───────────────────────────────────────────── */
-function GradientMesh() {
-  return (
-    <div className="fixed inset-0 -z-20 pointer-events-none overflow-hidden">
-      <div className="mesh-orb-a absolute -top-1/3 right-0 w-[55vw] h-[55vw] max-w-[800px] max-h-[800px] rounded-full bg-[#22c55e]/10 dark:bg-[#22c55e]/5 blur-[120px] dark:blur-[150px]" />
-      <div className="mesh-orb-b absolute -bottom-1/4 -left-1/4 w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-full bg-emerald-600/10 dark:bg-emerald-600/5 blur-[140px] dark:blur-[160px]" />
-      <div className="mesh-orb-c absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] rounded-full bg-green-400/10 dark:bg-[#22c55e]/5 blur-[150px] dark:blur-[180px]" />
-    </div>
-  );
-}
+// Replaced by MouseFluidBackground
 
 /* ─────────────────────────────────────────────
    Scroll progress bar
@@ -224,13 +217,33 @@ function ServiceCard3D({
   const rotateX  = useTransform(scrollYProgress, [start, end], [30, 0]);
   const y        = useTransform(scrollYProgress, [start, end], [55, 0]);
 
+  // Spotlight Effect
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function onMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
   return (
     <motion.a
       href="/#contact"
+      onMouseMove={onMouseMove}
       style={{ opacity, rotateX, y, transformStyle: "preserve-3d" }}
       whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.2, ease: "easeOut" } }}
       className="gradient-border group flex flex-col relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-md transition-all duration-300 hover:border-[#22c55e]/30 hover:shadow-[0_14px_44px_rgba(34,197,94,0.14)] dark:border-white/5 dark:bg-[#0f172a] dark:shadow-[0_2px_16px_rgba(0,0,0,0.3)]"
     >
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useTransform(
+            [mouseX, mouseY],
+            ([x, y]) => `radial-gradient(400px circle at ${x}px ${y}px, rgba(34,197,94,0.1), transparent 40%)`
+          )
+        }}
+      />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#22c55e]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       <div className="flex items-start gap-3 relative z-10">
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-100 bg-gradient-to-br from-[#22c55e]/10 to-[#22c55e]/5 text-[#22c55e] transition-all duration-300 group-hover:from-[#22c55e] group-hover:to-emerald-400 group-hover:text-white group-hover:shadow-[0_0_24px_rgba(34,197,94,0.4)] dark:border-white/5 dark:from-[#22c55e]/15">
@@ -331,7 +344,13 @@ function ProcessSection() {
       <div className="relative mt-14">
         <div className="absolute left-[13%] right-[13%] top-[4.6rem] hidden h-px overflow-hidden lg:block">
           <div className="absolute inset-0 bg-slate-200 dark:bg-white/5" />
-          <motion.div style={{ scaleX: lineScaleX }} className="beam-pulse absolute inset-0 origin-left bg-gradient-to-r from-[#22c55e]/30 via-[#22c55e]/70 to-[#22c55e]/30" />
+          <motion.div style={{ scaleX: lineScaleX }} className="absolute inset-0 origin-left bg-gradient-to-r from-[#22c55e]/30 via-[#22c55e]/70 to-[#22c55e]/30" />
+          {/* Energy Pulse traveling across the line */}
+          <motion.div
+            animate={{ x: ["-100%", "500%"] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            className="absolute top-0 h-full w-[20%] bg-gradient-to-r from-transparent via-[#22c55e] to-transparent shadow-[0_0_10px_rgba(34,197,94,0.8)]"
+          />
         </div>
         <div className="relative z-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {PROCESS_STEPS.map((step, i) => <ProcessStep key={step.step} step={step} index={i} total={PROCESS_STEPS.length} scrollYProgress={scrollYProgress} />)}
@@ -576,7 +595,7 @@ export default function HomeClient({ initialData }: { initialData: { services: S
 
   return (
     <>
-      <GradientMesh />
+      <MouseFluidBackground />
       <ScrollProgressBar />
       <div className="relative overflow-hidden">
         <section ref={heroRef} className="relative flex min-h-[88vh] items-center overflow-hidden pb-20 pt-16 sm:pb-28 sm:pt-20">
