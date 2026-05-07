@@ -78,9 +78,6 @@ export function Navbar() {
             <div className="text-[15px] font-bold tracking-tight text-slate-900 dark:text-white transition-colors group-hover:text-[#22c55e]">
               SK Bloom HR Solutions
             </div>
-            <div className="text-[9.5px] font-semibold tracking-[0.12em] text-slate-500 dark:text-[#94a3b8] uppercase">
-              Corporate Solutions
-            </div>
           </div>
         </Link>
 
