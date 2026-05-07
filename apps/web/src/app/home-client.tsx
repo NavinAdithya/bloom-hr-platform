@@ -469,14 +469,23 @@ function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) 
 ───────────────────────────────────────────── */
 function ContactSection({ contactPhone, contactEmail, contactAddress }: { contactPhone: string; contactEmail: string; contactAddress: string; }) {
   return (
-    <section id="contact" className="container-fluid pt-24 pb-12">
+    <section id="contact" className="container-fluid pt-24 pb-12 relative">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-2xl sm:p-10 dark:border-white/5 dark:bg-[#0b1628] dark:shadow-[0_8px_60px_rgba(0,0,0,0.4)]"
+        className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-2xl sm:p-10 dark:border-white/5 dark:bg-[#0b1628]/90 dark:shadow-[0_8px_60px_rgba(0,0,0,0.4)] backdrop-blur-xl"
       >
+        {/* Subtle Looping Motion Background */}
+        <div className="absolute inset-0 -z-10 opacity-[0.03] dark:opacity-[0.05]">
+          <motion.div 
+            animate={{ x: ["0%", "-50%"] }} 
+            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 flex w-[200%]"
+            style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%2322c55e%22 fill-opacity=%221%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')" }}
+          />
+        </div>
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#22c55e]/40 to-transparent dark:via-[#22c55e]/25" />
         <div className="pointer-events-none absolute right-0 top-0 h-[400px] w-[500px] rounded-full bg-[#22c55e]/5 blur-[100px] dark:bg-[#22c55e]/3 dark:blur-[140px]" />
         
